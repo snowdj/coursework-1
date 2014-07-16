@@ -1,4 +1,4 @@
 coursework
 ==========
 
-Codes of course homework and projects.
+My homework and projects code for online courses.

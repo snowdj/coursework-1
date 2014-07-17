@@ -7,6 +7,7 @@ Collaborators:
 
 # Q1.
 
+
 def part(n):
     """Return the number of partitions of positive integer n.
 
@@ -14,9 +15,16 @@ def part(n):
     7
     """
     "*** YOUR CODE HERE ***"
+    def rest(subset, m):
+        if m > 1:
+            return rest(subset + (1,), m-1)
+        elif m == 1:
+            return 1
 
+    return ((), n)
 
 # Q2.
+
 
 def g(n):
     """Return the value of g, defined 
@@ -36,6 +44,7 @@ def g(n):
     22
     """
     "*** YOUR CODE HERE ***"
+
 
 def g_iter(n):
     """Return the value of g, defined 

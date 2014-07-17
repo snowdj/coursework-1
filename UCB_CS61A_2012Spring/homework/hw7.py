@@ -15,14 +15,40 @@ def part(n):
     7
     """
     "*** YOUR CODE HERE ***"
-    def rest(subset, m):
-        if m > 1:
-            return rest(subset + (1,), m-1)
-        elif m == 1:
-            return 1
+    # http://code.activestate.com/recipes/218332-generator-for-integer-partitions/
+    #
+    # First algorithm: Incremental with order.
+    # If you have a partition of n, you can reduce it to a partition of n-1
+    # in a canonical way by subtracting one from the smallest item in the 
+    # partition. E.g. 1+2+3 => 2+3, 2+4 => 1+4. This algorithm reverses the
+    # process: for each partition p of n-1, it finds the partitions of n that
+    # would be reduced to p by this process. Therefore, each partition of n is
+    # output exactly once, at the step when the partition of n-1 to which it
+    # reduces is considered.
+    #
+    def partitions(n):
+        # base case of recursion: zero is the sum of the empty list
+        if n == 0:
+            yield ()
+            return
+            
+	# modify partitions of n-1 to form partitions of n
+        for p in partitions(n-1):
+            yield (1,) + p
+            if p and (len(p) < 2 or p[1] > p[0]):
+                yield (p[0] + 1,) + p[1:]
 
-    return ((), n)
+    # Alternative algorithm: Permutation without order, and then eliminate duplicates.
+    # http://stackoverflow.com/questions/10035752/elegant-python-code-for-integer-partitioning
+    def partition(number):
+        answer = set()
+        answer.add((number, ))
+        for x in range(1, number):
+            for y in partition(number - x):
+                answer.add(tuple(sorted((x, ) + y)))
+        return answer
 
+    return len(tuple(partitions(n)))
 # Q2.
 
 
@@ -197,10 +223,10 @@ def has_cycle2(L):
 from operator import sub, mul
 
 def fact_maker():
-"*** YOUR CODE HERE ***"
-    return YOUR_CODE_HERE
-"""
->>> fact_maker()(5)
-120
-"""
+    """
+    >>> fact_maker()(5)
+    120
+    """
+    "*** YOUR CODE HERE ***"
+    #return YOUR_CODE_HERE
 

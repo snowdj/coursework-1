@@ -17,9 +17,9 @@ def part(n):
     "*** YOUR CODE HERE ***"
     # http://code.activestate.com/recipes/218332-generator-for-integer-partitions/
     #
-    # First algorithm: Incremental with order.
+    # First algorithm: Ordered increse by 1, without duplicates.
     # If you have a partition of n, you can reduce it to a partition of n-1
-    # in a canonical way by subtracting one from the smallest item in the 
+    # in a canonical way by subtracting one from the smallest item in the
     # partition. E.g. 1+2+3 => 2+3, 2+4 => 1+4. This algorithm reverses the
     # process: for each partition p of n-1, it finds the partitions of n that
     # would be reduced to p by this process. Therefore, each partition of n is
@@ -49,13 +49,13 @@ def part(n):
         return answer
 
     return len(tuple(partitions(n)))
+
+
 # Q2.
-
-
 def g(n):
-    """Return the value of g, defined 
+    """Return the value of g, defined
           g(n) = n,                                       if n <= 3
-          g(n) = g(n - 1) + 2 * g(n - 2) + 3 * g(n - 3),  if n > 3 
+          g(n) = g(n - 1) + 2 * g(n - 2) + 3 * g(n - 3),  if n > 3
     For integers n > 0.
 
     >>> g(1)
@@ -70,29 +70,43 @@ def g(n):
     22
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return n
+    else:
+        return g(n-1) + 2 * g(n - 2) + 3 * g(n - 3)
 
 
 def g_iter(n):
-    """Return the value of g, defined 
+    """Return the value of g, defined
           g(n) = n,                                       if n <= 3
-          g(n) = g(n - 1) + 2 * g(n - 2) + 3 * g(n - 3),  if n > 3 
+          g(n) = g(n - 1) + 2 * g(n - 2) + 3 * g(n - 3),  if n > 3
     For integers n > 0.
 
-    >>> g(1)
+    >>> g_iter(1)
     1
-    >>> g(2)
+    >>> g_iter(2)
     2
-    >>> g(3)
+    >>> g_iter(3)
     3
-    >>> g(4)
+    >>> g_iter(4)
     10
-    >>> g(5)
+    >>> g_iter(5)
     22
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return n
+    else:
+        g_n_3 = 1
+        g_n_2 = 2
+        g_n_1 = 3
+        for _ in range(n-3):
+            g_n = g_n_1 + 2 * g_n_2 + 3 * g_n_3
+            g_n_1, g_n_2, g_n_3 = g_n, g_n_1, g_n_2
+        return g_n
+
 
 # Q3.
-
 def g_counted(n):
     """Return a tuple (g(n), cost(n)), where cost(n) is the number of times
     the recursive version of g is called during the computation of g(n).
@@ -105,6 +119,16 @@ def g_counted(n):
     (22, 7)
     """
     "*** YOUR CODE HERE ***"
+    if n <= 3:
+        return (n, 1)
+    else:
+        g_n_1 = g_counted(n-1)
+        g_n_2 = g_counted(n-2)
+        g_n_3 = g_counted(n-3)
+        g_n = g_n_1[0] + 2 * g_n_2[0] + 3 * g_n_3[0]
+        c_n = g_n_1[1] + g_n_2[1] + g_n_3[1] + 1
+        return g_n, c_n
+
 
 # Q4.
 

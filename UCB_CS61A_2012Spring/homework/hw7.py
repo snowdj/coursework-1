@@ -167,8 +167,8 @@ class vect:
 
     "*** YOUR CODE HERE ***"
 
-# Q5.
 
+# Q5.
 def partm(n):
     """Return the number of partitions of positive integer n.
 
@@ -180,8 +180,8 @@ def partm(n):
 
     "*** YOUR CODE HERE ***"
 
-## Q6.
 
+## Q6.
 class rlist:
     """A mutable recursive list."""
 
@@ -210,6 +210,7 @@ class rlist:
              r = r.rest()
         return result
 
+
 def has_cycle(L):
     """True iff L is a circular rlist.
 
@@ -224,9 +225,16 @@ def has_cycle(L):
     True
     """
     "*** YOUR CODE HERE ***"
-    
-## Q7.  Extra for experts
+    lists = set()
+    while L != rlist.empty:
+        if L in lists:
+            return True
+        lists.add(L)
+        L = L.rest()
+    return False
 
+
+## Q7.  Extra for experts
 def has_cycle2(L):
     """True iff L is a circular rlist.
 
@@ -241,6 +249,19 @@ def has_cycle2(L):
     True
     """
     "*** YOUR CODE HERE ***"
+    if L == rlist.empty:
+        return False
+    else:
+        slow, fast = L, L.rest()
+        while fast != rlist.empty:
+            if fast.rest() == rlist.empty:
+                return False
+            elif fast == slow or fast.rest() == slow:
+                return True
+            else:
+                slow, fast = slow.rest(), fast.rest().rest()
+        return False
+
 
 ## Q8.  Extra for experts
 

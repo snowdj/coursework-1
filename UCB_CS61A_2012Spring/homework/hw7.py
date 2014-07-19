@@ -184,10 +184,37 @@ def partm(n):
 ## Q6.
 class rlist:
     """A mutable recursive list."""
+    def __repr__(self):
+        """A printed representation of self that resembles a Python
+        expression that reproduces the same list.  The builtin function
+        repr(x) calls x.__repr__().  The Python interpreter uses __repr__
+        to print the values of non-null expressions it evaluates."""
+        f = repr(self.first())
+        if self.rest() is rlist.empty():
+            return 'rlist({0})'.format(f)
+        else:
+            return 'rlist({0}, {1})'.format(f, repr(self.rest()))
 
-    empty = None
+    class _EmptyRlist:
+        def __repr__(self):
+            return 'rlist.empty()'
 
-    def __init__(self, first, rest = empty):
+        def first(self):
+            return None
+
+        def rest(self):
+            return None
+
+        def __len__(self):
+            return 0
+
+    _empty_rlist = _EmptyRlist()
+
+    @classmethod
+    def empty(cls):
+        return rlist._empty_rlist
+
+    def __init__(self, first, rest=_empty_rlist):
         self.__first = first
         self.__rest = rest
 

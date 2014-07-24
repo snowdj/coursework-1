@@ -104,8 +104,27 @@ def tree_find(T, x):
     """
     "*** YOUR CODE HERE ***"
 
-# Q2.
+    #--- Recursively: ---#
+    # if T.label is None:
+    #     return False
+    # else:
+    #     return x == T.label \
+    #            or (x < T.label and tree_find(T[0], x)) \
+    #            or (x > T.label and tree_find(T[1], x))
 
+    #--- Iteratively: ---#
+    T1 = T
+    while T1.label is not None:
+        if x == T1.label:
+            return True
+        elif x < T1.label:
+            T1 = T1[0]
+        else:
+            T1 = T1[1]
+    return False
+            
+
+# Q2.
 def depth(T, x):
     """The depth, in any, at which x appears as a label in T.  Returns
     None if x is not in T.
@@ -117,6 +136,28 @@ def depth(T, x):
     >>> depth(T, 10)   # Result is None
     """
     "*** YOUR CODE HERE ***"
+    dep = 0
+
+    def tree_find(T, x, update_dep=False):
+        nonlocal dep
+        if update_dep:
+            dep += 1
+
+        if x == T.label:
+            return True
+        elif T.label is None or T.arity == 0:
+            return False
+        elif T.arity == 1:
+            return tree_find(T[0], x, True)
+        else:  # T.arity > 1
+            return tree_find(T[0], x, True) \
+                or any(map(tree_find, T[1:], (x,)*(T.arity-1)))
+
+    if not tree_find(T, x):
+        return None
+    else:
+        return dep
+    
 
 # Q3.
 

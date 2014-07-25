@@ -3,6 +3,7 @@
 Name:
 Login:
 Collaborators:
+Status: unfinished.
 """
 
 # Copied from lecture.  

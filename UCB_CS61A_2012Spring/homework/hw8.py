@@ -209,6 +209,46 @@ def gen_tree_find(T, x):
     """
     # (non-recursive version)
     "*** YOUR CODE HERE ***"
+    T1 = T
+    while T1.label is not None:
+        if x in T1.label:
+            return True
+        elif x > T1.label[-1]:
+            T1 = T1[-1]
+        else:
+            for i in range(len(T1.label)):
+                if x < T1.label[i]:
+                    T1 = T1[i]
+                    break
+    return False
+            
+
+## use bisect.bisect_left() to find the child for next-loop
+import bisect
+def gen_tree_find_bisect(T, x):
+    """True iff x is a label in set T, represented as a general
+    search tree.
+    >>> gen_tree_find(PRIME_GENERAL_TREE, 5)
+    True
+    >>> gen_tree_find(PRIME_GENERAL_TREE, 0)
+    False
+    >>> gen_tree_find(PRIME_GENERAL_TREE, 27)
+    False
+    >>> gen_tree_find(PRIME_GENERAL_TREE, 929)
+    True
+    >>> gen_tree_find(PRIME_GENERAL_TREE, 989)
+    False
+    """
+    # (non-recursive version)
+    "*** YOUR CODE HERE ***"
+    T1 = T
+    while T1.label is not None:
+        if x in T1.label:
+            return True
+        else:
+            T1 = T1[bisect.bisect_left(T1.label, x)]
+    return False
+
 
 # Q4.
 

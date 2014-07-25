@@ -263,6 +263,14 @@ def memoize(func):
     and that the values of its argument, v, are of a type suitable for
     use as keys in a Python dictionary."""
     "*** YOUR CODE HERE ***"
+    mem_dict = {}
+
+    def f(*arg):
+        if arg not in mem_dict:
+            mem_dict[arg] = func(*arg)
+        return mem_dict[arg]
+
+    return f
 
 # Q5.
 

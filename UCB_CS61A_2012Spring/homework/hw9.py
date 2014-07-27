@@ -217,8 +217,12 @@ def calc_test():
         target = examples.pop(0).strip()
         # Construct what would have been printed by the Calculator's
         # read-eval-print loop.
-        result = None 
+        # result = None
         "*** YOUR CODE HERE ***"
+        try:
+            result = calc_eval(calc_parse(calc_expression)).__repr__()
+        except TypeError as err:
+            result = type(err).__name__ + ': ' + err.__str__()
         assert result == target, result + ' is not ' + target
 
 from operator import mul
@@ -298,7 +302,18 @@ def calc_apply(operator, args):
         return numer/denom
     if operator == 'word':
         "*** YOUR CODE HERE ***"
-    
+        if len(args) != 2:
+            raise TypeError(operator + ' requires exactly 2 arguments')
+        try:
+            repr_comb = args[0].__repr__() + args[1].__repr__()
+            if type(args[0]) == int and type(args[1]) == int:
+                return int(repr_comb)
+            else:
+                return float(repr_comb)
+        except ValueError:
+            raise TypeError("{0} is not a well-formed number".
+                            format(repr_comb))
+
 # Parsing (NO CHANGES ARE REQUIRED TO THIS PART OF CALCULATOR)
 
 def calc_parse(line):

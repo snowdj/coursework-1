@@ -68,8 +68,8 @@ def sem_test():
     for t in testers:
         t.join()
 
-# Q2.
 
+# Q2.
 class Table:
     """A table full of chopsticks, represented as locks."""
     def __init__(self, seats):
@@ -80,13 +80,14 @@ class Table:
         self.chopsticks[seat].acquire()
 
     def pick_right(self, seat):
-        self.chopsticks[(seat+1)%self.seats].acquire()
+        self.chopsticks[(seat+1) % self.seats].acquire()
 
     def replace_left(self, seat):
         self.chopsticks[seat].release()
 
     def replace_right(self, seat):
-        self.chopsticks[(seat+1)%self.seats].release()
+        self.chopsticks[(seat+1) % self.seats].release()
+
 
 class Philosopher(Thread):
     """A philosopher who dines."""
@@ -133,6 +134,7 @@ class Philosopher(Thread):
     def think(self):
         sleep(0.0001)
 
+
 class Waiter(object):
     def __init__(self, seats):
         "*** YOUR CODE HERE ***"
@@ -142,6 +144,7 @@ class Waiter(object):
 
     def I_am_done(self):
         "*** YOUR CODE HERE ***"
+
 
 class Doctor(Thread):
     """The doctor makes sure that nobody appears to be starving.
@@ -168,6 +171,7 @@ class Doctor(Thread):
         for p in self.philosophers:
             p.dine = False
 
+
 def dine(n):
     """Dine until the doctor says that dinner is over.
     
@@ -189,7 +193,6 @@ def dine(n):
 
 
 # Q3.
-
 class Stream(object):
     """A lazily computed recursive list."""
 

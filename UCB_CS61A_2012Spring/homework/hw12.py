@@ -110,6 +110,14 @@ class Philosopher(Thread):
         while self.dine:
             self.think()
             "*** YOUR CODE HERE ***"
+            self.waiter.may_I_eat()
+            self.pick_left()
+            self.pick_right()
+            self.eat()
+            # print('Philosopher {0} is eating.'.format(self.seat))
+            self.replace_left()
+            self.replace_right()
+            self.waiter.I_am_done()
 
     def pick_left(self):
         self.table.pick_left(self.seat)
@@ -138,12 +146,17 @@ class Philosopher(Thread):
 class Waiter(object):
     def __init__(self, seats):
         "*** YOUR CODE HERE ***"
+        self.chopsticks = Sem(seats)
 
     def may_I_eat(self):
         "*** YOUR CODE HERE ***"
+        self.chopsticks.acquire()
+        self.chopsticks.acquire()
 
     def I_am_done(self):
         "*** YOUR CODE HERE ***"
+        self.chopsticks.release()
+        self.chopsticks.release()
 
 
 class Doctor(Thread):
@@ -225,6 +238,7 @@ class Stream(object):
 
 empty_stream = Stream(None, None, True)
 
+
 def list_to_stream(L):
     """The finite stream containing the elements of L."""
     r = empty_stream
@@ -232,25 +246,30 @@ def list_to_stream(L):
         r = r.prepend(L[i])
     return r
 
+
 def filter_stream(fn, s):
     """Return a stream of the elements of s for which fn is true."""
     if s.empty:
         return s
+
     def compute_rest():
         return filter_stream(fn, s.rest)
     if fn(s.first):
         return Stream(s.first, compute_rest)
     return compute_rest()
 
+
 def truncate_stream(s, k):
     """Return a stream over the first k elements of stream s."""
     if s.empty or k == 0:
         return empty_stream
+
     def compute_rest():
         return truncate_stream(s.rest, k-1)
     return Stream(s.first, compute_rest)
 
-def stream_to_list(s, lim = -1):
+
+def stream_to_list(s, lim=-1):
     """Return a list containing the elements of stream S. If LIM>=0,
     returns at most the first LIM elements of S."""
     r = []
@@ -259,6 +278,7 @@ def stream_to_list(s, lim = -1):
         s = s.rest
         lim -= 1
     return r
+
 
 def uniq(s):
     """A stream consisting of the unique items in S (that is, with all but

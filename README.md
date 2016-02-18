@@ -1,4 +1,4 @@
-coursework
+Learning
 ==========
 
-My homework and projects code for online courses.
+My homeworks, exercies, and practicing projects.

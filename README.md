@@ -1,4 +1,4 @@
 Coursework
 ==========
 
-My homeworks, exercies, and practicing projects.
+My exercies and practicing projects for self-learning books and courses.

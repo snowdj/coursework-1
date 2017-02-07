@@ -6,7 +6,7 @@ My coding in Python for homeworks and projects when learning the UC Berkeley onl
 <A href='https://github.com/JesseLiu0/coursework/tree/master/UCB_CS61A_2012Spring/projects'>Projects</A><BR>
 
 Textbook: <P>
-<IMG src='https://mitpress.mit.edu/sites/default/files/9780262510875.jpg', height=20%, width=20%> <P>
+<IMG src='https://mitpress.mit.edu/sites/default/files/9780262510875.jpg', height=35%, width=35%> <P>
 
-Lecture videos on YouTube:
-<iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLEE65657BC5C79469" frameborder="0" allowfullscreen></iframe>
+Lecture videos on YouTube: <P>
+<A href='https://www.youtube.com/playlist?list=PLEE65657BC5C79469'>https://www.youtube.com/playlist?list=PLEE65657BC5C79469</A>

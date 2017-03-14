@@ -2,7 +2,7 @@
 
 My coding exercises in R and Python while learning [DataCamp](https://www.datacamp.com/) courses.
 
-![DataCamp](./datacamplogo.png?raw=true "DataCamp"|width=100)
+![](./datacamplogo.png?raw=true "DataCamp"|width=100)
 
 R courses taken:
   * Data Analysis in R:  the data.table Way

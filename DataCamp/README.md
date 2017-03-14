@@ -1,6 +1,6 @@
 # DataCamp
 
-My coding exercises in R and Python while learning <a target="_blank" href='https://www.datacamp.com/'>DataCamp</a> courses.<P>
+My coding exercises in R and Python while learning <A target="_blank" href='https://www.datacamp.com/'>DataCamp</A> courses.<P>
 
 <IMG src='https://cdn.datacamp.com/main-app/assets/brand/logo_tagline-d355ee4dbf2c9819435bbd03926ad742109bab131ebd9148bb630026a75d6ad3.png', height=20%, width=20%> <P>
 

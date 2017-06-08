@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Sorting algorithms and data structures
 """

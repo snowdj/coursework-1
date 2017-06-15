@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Implementations of classic sequential container data structures:
 Stacks, queues, double-ended queues, linked lists, priority queues, heaps.

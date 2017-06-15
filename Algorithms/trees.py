@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Implementations of classic tree data structures:
 Binary tree, binary search tree, AVL tree, red-black tree.

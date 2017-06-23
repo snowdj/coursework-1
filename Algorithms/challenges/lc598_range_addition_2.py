@@ -1,7 +1,6 @@
 """
-Time: O(k)
-Space: O(2k) = O(k), or O(1) if ops is 2xk.
-k is number of operations
+Time: O(k) k is number of operations
+Space: O(1)
 
 Given an m * n matrix M initialized with all 0's and several update operations.
 

@@ -1,4 +1,7 @@
 """
+Time: O(n+k)
+Space: O(1)
+
 Assume you have an array of length n initialized with all 0's and are given k
 update operations.
 

@@ -48,4 +48,15 @@ class Solution(object):
         :type ops: List[List[int]]
         :rtype: int
         """
-        return min(ops, key=lambda e: e[0]) * min(ops, key=lambda e: e[1]) if ops else m * n
+        return min(ops, key=lambda e: e[0])[0] * min(ops, key=lambda e: e[1])[1] if ops else m * n
+
+
+class Solution2(object):
+    def maxCount(self, m, n, ops):
+        """
+        :type m: int
+        :type n: int
+        :type ops: List[List[int]]
+        :rtype: int
+        """
+        return min(op[0] for op in ops) * min(op[1] for op in ops) if ops else m * n

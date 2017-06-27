@@ -124,7 +124,7 @@ class text_justification:
     def _badness(self, i, j):
         """
         The cost function of how bad to use words[i, j] as a line.
-        Assume 0 <= i <= j <= n-1.
+        Assume 0 <= i <= j <= n.
 
         badness(i, j) = (page width - total width) ^ 3, if fit.
                         INF, if don't fit.

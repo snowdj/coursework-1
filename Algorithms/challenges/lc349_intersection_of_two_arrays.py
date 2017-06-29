@@ -1,6 +1,6 @@
 """
-Time: O(m+n)
-Space: O(m+k2)  k2 is # of non-unique nums2 elements also in nums1.
+Time: O(min(m,n))
+Space: O(m+n)
 
 Given two arrays, write a function to compute their intersection.
 
@@ -30,7 +30,5 @@ class Solution2(object):
         :type nums1: List[int]
         :type nums2: List[int]
         :rtype: List[int]
-
-        Time is O(m*n) for set intersection in worst case!!!
         """
         return list(set(nums1) & set(nums2))

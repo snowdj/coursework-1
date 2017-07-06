@@ -34,6 +34,7 @@ Examples of Fibonacci and Shortest Paths to show 5 easy steps:
 
 
 import operator
+import random
 
 
 def static_vars(**kwargs):
@@ -181,11 +182,74 @@ class text_justification:
         return s
 
 
-class blackjack:
+class BlackJack:
     """
+    Perfect-information blackjack game, solved by DP.
+    - given entire deck order: c0, c1, ..., c_n-1
+    - 1 player game vs. stand-on-17 dealer
+    - when should you hit or stand? Guess
+    - goal: maximize winnings for fixed bet $1 bet/hand
+    - may benefit from losing one hand to improve future hands!
+
     Ref: MIT 6.006 Fall 2011, Lec. 20: Dynamic Programming II
+    Lec Note: https://courses.csail.mit.edu/6.006/fall11/lectures/lecture20.pdf
     Video: https://www.youtube.com/watch?v=ENyox7kNKeY  38:50
+           https://www.youtube.com/watch?v=jZbkToeNK2g
+
+    *** Lecture Notes ***
+    Dynamic Programming Steps:
+    (1) subproblems: suffix c_i:, where to start new hand?
+        BJ(i) = best play of c_i,..., c_n-1 (remaining cards)
+        -- i: # cards already played
+        -- # of subproblems: n
+    (2) guess: how many times player hits?
+        -- # of choices: <= n
+    (3) recurrence:
+        BJ(i) = max(
+                    outcome in {-1,0,1} + BJ(i + #cards used)    <-- O(n)
+                    for #hits in range(0, n) if valid play(don't hit after bust))  <-- O(n)
+        #cards used: 4 + #hits + #dealer hits
+        -- base case: BJ(i) = 0 for n-i < 4
+        -- time/subproblem: \theta(n^2), n choices * run dealer strategy
+    (4) topological order: i = n, ..., 0
+        -- total time: \theta(n^3)
+    (5) solution: BJ(0)
     """
+    def __init__(self):
+        self._deck = list(range(1, 14)) * 4
+        random.shuffle(self._deck)
+
+    def bj(self, i):
+        """
+        After i cards played, find the max possible winnings by DP.
+        Pseudocode in lecture note.
+        """
+        n = len(self._deck)
+        if n - i < 4:  # Base case: not enough cards.
+            return 0
+
+        options = []
+        for p in range(2, n-i-1):  # Number of cards taken by player.
+            player_cards = self._deck[i:i+4:2] + self._deck[i+4:i+p+2]
+            ace = player_cards.count(1)
+            player = sum(player_cards)
+            while ace > 0 and (21-player)//10 > 0:  # decide ace is 1 or 11
+                player += 10
+                ace -= 1
+            if player > 21:  # bust
+                options.append(-1+self.bj(i+p+2))  # -$1 since last p bust
+                break
+
+            for d in range(2, n-i-p+1):  # run dealer strategy
+                dealer_cards = self._deck[i+1:i+5:2] + self._deck[i+p+2:i+p+d]
+                dealer = sum(dealer_cards) + dealer_cards.count(1) * 10
+                if dealer >= 17:
+                    break  # dealer stand
+            if dealer > 21:
+                dealer = 0  # bust
+            options.append(
+                ((player > dealer) - (dealer > player)) + self.bj(i+p+d))
+        return max(options)
 
 
 def test(case):
@@ -199,6 +263,10 @@ def test(case):
         print('Justify news.txt with page width 50:\n')
         tj.justify(50)
         print(tj)
+    elif 'blackjack' in case.lower():
+        bj = BlackJack()
+        print("Deck:\n{}".format(bj._deck))
+        print("Max profit:\n{}".format(bj.bj(0)))
 
 
 if __name__ == '__main__':

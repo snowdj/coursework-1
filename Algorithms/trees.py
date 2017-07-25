@@ -242,6 +242,23 @@ class BinaryTree:
         for x in self.inorder(self.root):
             yield x
 
+    def preorder_iter(self, node):
+        """
+        Iterative preorder traversal using a stack.
+        http://www.geeksforgeeks.org/iterative-preorder-traversal/
+        1) Create an empty stack nodeStack and push root node to stack.
+        2) Do following while nodeStack is not empty.
+        ….a) Pop an item from stack and print it.
+        ….b) Push right child of popped item to stack
+        ….c) Push left child of popped item to stack
+        """
+        stack = None if node is self._NIL else [node]
+        while stack:
+            node = stack.pop()
+            stack.extend([child for child in [node.right, node.left]
+                          if child is not self._NIL])
+            yield node
+
     def __iter__(self):
         """
         Generate an iteration of tree nodes' element.
@@ -1053,9 +1070,21 @@ def test_bt():
     bt.add_left(n18, 17)
     bt.add_right(n18, 20)
 
-    print("\nInorder traversal:")
+    print("\nRecursive inorder traversal:")
     for x_key in bt:
         print(x_key)
+
+    print("\nIterative inorder traversal:")
+    for node in bt.inorder_iter(bt.root):
+        print(node.key)
+
+    print("\nMorris inorder traversal:")
+    for node in bt.inorder_morris(bt.root):
+        print(node.key)
+
+    print("\nIterative preorder traversal:")
+    for node in bt.preorder_iter(bt.root):
+        print(node.key)
 
     print("\nBreadth-first traversal:")
     for x in bt.breadth_first_walk():
@@ -1068,7 +1097,7 @@ def test_bt():
     print('Tree height = ', bt.height())
 
     print('Is Node 7 a leaf?', bt.is_leaf(n7))
-    print('Is Node 4 a leaf:', bt.is_leaf(n3.right))
+    print('Is Node 4 a leaf?', bt.is_leaf(n3.right))
 
 
 def test_bst(tree_type):

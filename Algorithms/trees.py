@@ -195,6 +195,20 @@ class BinaryTree:
             for x in self.subtree_inorder_walk(node.right):
                 yield x
 
+    def subtree_inorder_walk_iterative(self, node):
+        """
+        Iterative inorder walk using a stack.
+        """
+        stack = []
+        while stack or node is not self._NIL:
+            if node is not self._NIL:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                yield node
+                node = node.right
+
     def _inorder_walk(self):
         """
         Generator for inorder traversal of this tree.

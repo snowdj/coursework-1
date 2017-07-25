@@ -183,19 +183,19 @@ class BinaryTree:
     def is_empty(self):
         return len(self) == 0
 
-    def subtree_inorder_walk(self, node):
+    def inorder(self, node):
         """
         Generator for inorder traversal of a subtree.
         """
         if node.left is not self._NIL:  # has left subtree
-            for x in self.subtree_inorder_walk(node.left):
+            for x in self.inorder(node.left):
                 yield x
         yield node
         if node.right is not self._NIL:  # has right subtree
-            for x in self.subtree_inorder_walk(node.right):
+            for x in self.inorder(node.right):
                 yield x
 
-    def subtree_inorder_walk_iterative(self, node):
+    def inorder_iter(self, node):
         """
         Iterative inorder walk using a stack.
         """
@@ -209,7 +209,7 @@ class BinaryTree:
                 yield node
                 node = node.right
 
-    def subtree_inorder_walk_morris(self, node):
+    def inorder_morris(self, node):
         """
         Morris inorder traversal using O(n) time and O(1) extra memory.
         http://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
@@ -239,7 +239,7 @@ class BinaryTree:
         Generator for inorder traversal of this tree.
         Yield NIL node for an empty tree.
         """
-        for x in self.subtree_inorder_walk(self.root):
+        for x in self.inorder(self.root):
             yield x
 
     def __iter__(self):

@@ -209,6 +209,31 @@ class BinaryTree:
                 yield node
                 node = node.right
 
+    def subtree_inorder_walk_morris(self, node):
+        """
+        Morris inorder traversal using O(n) time and O(1) extra memory.
+        http://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/
+        http://www.cnblogs.com/AnnieKim/archive/2013/06/15/MorrisTraversal.html
+        https://en.wikipedia.org/wiki/Tree_traversal#Morris_in-order_traversal_using_threading
+        """
+        cur = node
+
+        while cur is not self._NIL:
+            if cur.left is self._NIL:  # cur reached the leftmost node
+                yield cur
+                cur = cur.right  # either walk to right subtree, or walk back to succssor by link
+            else:
+                pre = cur.left
+                while pre.right not in (self._NIL, cur):
+                    pre = pre.right
+                if pre.right is self._NIL:
+                    pre.right = cur  # Link predecessor of cur back to cur.
+                    cur = cur.left  # Walk to left after linking predecessor.
+                else:  # pre.right == cur, meaning walked back from predecessor by link
+                    pre.right = self._NIL  # delete link and restore tree
+                    yield cur
+                    cur = cur.right
+
     def _inorder_walk(self):
         """
         Generator for inorder traversal of this tree.

@@ -252,12 +252,53 @@ class BinaryTree:
         ….b) Push right child of popped item to stack
         ….c) Push left child of popped item to stack
         """
-        stack = None if node is self._NIL else [node]
+        stack = [] if node is self._NIL else [node]
         while stack:
             node = stack.pop()
             stack.extend([child for child in [node.right, node.left]
                           if child is not self._NIL])
             yield node
+
+    def postorder_iter_twostacks(self, node):
+        """
+        Iterative postorder traversal using two stacks.
+        http://www.geeksforgeeks.org/iterative-postorder-traversal/
+        1. Push root to first stack.
+        2. Loop while first stack is not empty
+           2.1 Pop a node from first stack and push it to second stack
+           2.2 Push left and right children of the popped node to first stack
+        3. Print contents of second stack
+        """
+        stack1, stack2 = [], []
+        if node is not self._NIL:
+            stack1.append(node)
+        while stack1:
+            node = stack1.pop()
+            stack2.append(node)  # push to stack2 by reversed postorder
+            stack1.extend([child for child in [node.left, node.right]
+                           if child is not self._NIL])
+        while stack2:
+            yield stack2.pop()
+
+    def postorder_iter_onestack(self, node):
+        """
+        Iterative postorder traversal using one stack.
+        """
+        stack = []
+        last = self._NIL  # last visited node
+        while stack or node is not self._NIL:
+            if node is not self._NIL:
+                stack.append(node)
+                node = node.left
+            else:  # reached leftmost node's left NIL child
+                node = stack[-1]  # back to leftmost node
+                if node.right is self._NIL or last is node.right:
+                    # no right child, or right child was visited last time
+                    node = stack.pop()
+                    yield node
+                    last, node = node, self._NIL
+                else:
+                    node = node.right
 
     def __iter__(self):
         """
@@ -1084,6 +1125,14 @@ def test_bt():
 
     print("\nIterative preorder traversal:")
     for node in bt.preorder_iter(bt.root):
+        print(node.key)
+
+    print("\nIterative postorder traversal using two stacks:")
+    for node in bt.postorder_iter_twostacks(bt.root):
+        print(node.key)
+
+    print("\nIterative postorder traversal using one stack:")
+    for node in bt.postorder_iter_onestack(bt.root):
         print(node.key)
 
     print("\nBreadth-first traversal:")

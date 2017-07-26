@@ -19,6 +19,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if not nums:
+            return 0
         i = 0
         for j in range(len(nums)):
             if nums[j] != nums[i]:

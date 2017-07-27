@@ -81,7 +81,6 @@ from itertools import zip_longest
 
 
 def validWordSquare(words):
-    return list(map(''.join, zip_longest(*words, fillvalue=''))) == words
+    return [''.join(s) for s in zip_longest(*words, fillvalue='')] == words
     # Notes:
     # fillvalue has to be '', otherwise ''.join() will add fillvalue to transposed words.
-    # map has to be converted to list to be compared with words.

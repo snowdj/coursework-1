@@ -42,7 +42,7 @@ class Solution2(object):
         """
         x = num
         while x * x > num:
-            x = (x + num/x)//2
+            x = (x + num/x)//2  # Newton iteration
         return x * x == num
 
 

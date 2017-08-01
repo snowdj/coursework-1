@@ -1,6 +1,6 @@
 """
 Time: O(n)
-Space: O(n)
+Space: O(1) because max(len(hash table)) = 256.
 
 Given two strings s and t, determine if they are isomorphic.
 
@@ -36,7 +36,7 @@ class Solution(object):
 
 
 def isIsomorphic(self, s, t):
-    d1, d2 = [0 for _ in range(256)], [0 for _ in range(256)]
+    d1, d2 = [0] * 256, [0] * 256
     for i in range(len(s)):
         if d1[ord(s[i])] != d2[ord(t[i])]:
             return False

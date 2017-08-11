@@ -31,6 +31,7 @@ class Solution(object):
 class Solution2:
     def rotate(self, A):
         A[:] = zip(*A[::-1])
+        # A[:] = zip(*reversed(A))
 
 
 # flip flip 40ms

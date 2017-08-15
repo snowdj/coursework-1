@@ -35,7 +35,7 @@ class Solution(object):
 
 
 # faster, as pop() removes all left subtree nodes after return root.left.
-class Solution(object):
+class Solution2(object):
     def buildTree(self, preorder, inorder):
         """
         :type preorder: List[int]
@@ -43,8 +43,8 @@ class Solution(object):
         :rtype: TreeNode
         """
         if inorder:
-            ind = inorder.index(preorder.pop(0))
-            root = TreeNode(inorder[ind])
-            root.left = self.buildTree(preorder, inorder[0:ind])
-            root.right = self.buildTree(preorder, inorder[ind+1:])
+            root = TreeNode(preorder.pop(0))
+            i = inorder.index(root.val)
+            root.left = self.buildTree(preorder, inorder[0:i])
+            root.right = self.buildTree(preorder, inorder[i+1:])
             return root

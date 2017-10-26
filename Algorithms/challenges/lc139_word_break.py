@@ -12,6 +12,7 @@ Return true because "leetcode" can be segmented as "leet code".
 """
 
 
+# DP of prefix subproblems, iteratively.
 class Solution(object):
     """
     Dynamic Programming Steps:

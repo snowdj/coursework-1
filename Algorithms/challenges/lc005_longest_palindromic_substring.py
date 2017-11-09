@@ -65,3 +65,29 @@ class Solution(object):
 # Manacher's Algorithm
 # http://www.cnblogs.com/grandyang/p/4475985.html
 # http://www.geeksforgeeks.org/manachers-algorithm-linear-time-longest-palindromic-substring-part-1/
+class Manacher(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        t = ('$',) + sum(zip('#' * len(s), s), ()) + ('#', '$')
+        n = len(t)
+        p = [0] * n
+        mxp_r, mxp_c = 0, 0
+        res_len, res_c = 0, 0
+        for i in range(n):
+            p[i] = min(p[mxp_c - (i - mxp_c)], mxp_r - i) if mxp_r > i else 1
+            while (i+p[i]) < n and (i-p[i]) >= 0 and t[i + p[i]] == t[i - p[i]]:
+                p[i] += 1
+
+            # update
+            if mxp_r < i + p[i]:
+                mxp_r = i + p[i]
+                mxp_c = i
+            if res_len < p[i]:
+                res_len = p[i]
+                res_c = i
+
+        return ''.join(c for c in t[res_c - res_len + 1:res_c+res_len]
+                       if c not in '$#')

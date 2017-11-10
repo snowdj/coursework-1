@@ -21,7 +21,7 @@ word = "ABCB", -> returns false.
 """
 
 
-# Brute-force recursion. Time limit exceeded.
+# DFS
 class Solution(object):
     def exist(self, board, word):
         """
@@ -33,24 +33,20 @@ class Solution(object):
         m = len(board)
         n = m and len(board[0])
 
-        def search(r, c, i):
-            if board[r][c] == word[i]:
-                if i == k-1:
-                    return True
-                tmp = board[r][c]
-                board[r][c] = '#'
-                goodpath = \
-                    (r > 0) and search(r-1, c, i+1) or\
-                    (r < m-1) and search(r+1, c, i+1) or\
-                    (c > 0) and search(r, c-1, i+1) or\
-                    (c < n-1) and search(r, c+1, i+1)  # time limit exceeded if using any() here.
-                board[r][c] = tmp
-                return goodpath
-            else:
+        def dfs(r, c, i):
+            if i == k:  # all the characters are checked
+                return True
+            if r < 0 or r >= m or c < 0 or c >= n or word[i] != board[r][c]:
                 return False
+            tmp = board[r][c]
+            board[r][c] = "#"  # avoid duplicate visit
+            res = dfs(r+1, c, i+1) or dfs(r-1, c, i+1) \
+                or dfs(r, c+1, i+1) or dfs(r, c-1, i+1)
+            board[r][c] = tmp
+            return res
 
         for r in range(m):
             for c in range(n):
-                if search(r, c, 0):
+                if dfs(r, c, 0):
                     return True
         return False

@@ -1,6 +1,6 @@
 """
-Time:
-Space:
+Time: O(n)
+Space: O(1)
 
 Follow up for problem "116. Populating Next Right Pointers in Each Node".
 

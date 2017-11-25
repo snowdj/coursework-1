@@ -1,12 +1,6 @@
 """
 Time: O(n)
 Space: O(1)
-Maximum Subarray Problem solved by Kadane's algorithm:
-https://en.wikipedia.org/wiki/Maximum_subarray_problem
-Is Kadane's algorithm Dyanmic Programming?
-https://stackoverflow.com/questions/16323792/dynamic-programming-aspect-in-kadanes-algorithm
-https://www.quora.com/Is-Kadanes-algorithm-consider-DP-or-not-And-how-to-implement-it-recursively
-
 
 
 Say you have an array for which the ith element is the price of a given stock
@@ -30,6 +24,27 @@ In this case, no transaction is done, i.e. max profit = 0.
 """
 
 
+# DP over 2 states, k = 1
+# Generalization:
+# https://discuss.leetcode.com/topic/107998/most-consistent-ways-of-dealing-with-the-series-of-stock-problems/
+class Solution:
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        cash, hold = 0, -float('inf')
+        for p in prices:
+            cash = max(cash, hold+p)
+            hold = max(hold, -p)
+        return cash
+
+
+# Maximum Subarray Problem solved by Kadane's algorithm:
+# https://en.wikipedia.org/wiki/Maximum_subarray_problem
+# Is Kadane's algorithm Dyanmic Programming?
+# https://stackoverflow.com/questions/16323792/dynamic-programming-aspect-in-kadanes-algorithm
+# https://www.quora.com/Is-Kadanes-algorithm-consider-DP-or-not-And-how-to-implement-it-recursively
 class Solution(object):
     def maxProfit(self, prices):
         """

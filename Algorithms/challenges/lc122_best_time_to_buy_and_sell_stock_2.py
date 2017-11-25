@@ -12,7 +12,24 @@ times). However, you may not engage in multiple transactions at the same time
 """
 
 
-class Solution(object):
+# DP over 2 states, k=inf
+# Generalization:
+# https://discuss.leetcode.com/topic/107998/most-consistent-ways-of-dealing-with-the-series-of-stock-problems/
+class Solution:
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        cash, hold = 0, -float('inf')
+        for p in prices:
+            cash = max(cash, hold+p)
+            hold = max(hold, cash-p)
+        return cash
+
+
+# Another way
+class Solution2(object):
     def maxProfit(self, prices):
         """
         :type prices: List[int]

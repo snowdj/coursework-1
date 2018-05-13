@@ -12,8 +12,9 @@ public:
       
       for (unsigned k = 0; k != nums.size(); k++)
         {
-          if (nums[k] > 0) break;  // scanning negatives only
           if (k > 0 && nums[k] == nums[k-1]) continue; // skip repetitions
+          if (nums[k] > 0) break;  // scanning negatives only
+
           int target = -nums[k];
           int i = k + 1, j = nums.size() - 1;
           
@@ -21,15 +22,14 @@ public:
           while (i < j)
             {
               int sum = nums[i] + nums[j];
-              if (sum == target)
+              if (sum < target) i++;
+              else if (sum > target) j--;
+              else
                 {
                   res.push_back(vector<int>{nums[k], nums[i], nums[j]});
-                  while (i < j && nums[i+1] == nums[i]) i++;  // skip duplicates
-                  while (i < j && nums[j-1] == nums[j]) j--;  // skip duplicates
-                  i++; j--;
+                  do i++; while (i < j && nums[i] == nums[i-1]);  // skip duplicates
+                  do j--; while (i < j && nums[j] == nums[j+1]);  // skip duplicates
                 }
-              else if (sum < target) i++;
-              else j--;
             }
         }
       return res;
